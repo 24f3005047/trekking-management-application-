@@ -1,0 +1,60 @@
+body{
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../images/login-page-mountains.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}
+
+.login-box, .register-page, .first-page{
+    width: 400px;
+    padding: 70px;
+    background: transparent;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.login-box input, .register-page input{
+    font-size: 14px;
+    width: 200px;
+    border-radius: 4px;
+    padding: 7px;
+}
+
+.login-box button, .register-page button{
+    font-size: 14px;
+    width: 218px;
+    border-radius: 4px;
+    padding: 7px;
+    background-color: #0D6EFD;
+    color: white;
+}
+
+.roles{
+    width: 300px;
+    padding: 70px;
+    background: transparent;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+select{
+    width: 170px;
+    padding: 5px;
+}
+
+.login-checkbox{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

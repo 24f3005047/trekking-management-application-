@@ -9,13 +9,13 @@ class User(db.Model):
     name=db.Column(db.String(100),nullable=False)
     email=db.Column(db.String(150),unique=True,nullable=False)
     password=db.Column(db.String(255),nullable=False)
-    contact=db.Column(db.String,nullable=False)
+    contact=db.Column(db.String(20),nullable=False)
     role=db.Column(db.String(50),nullable=False)
     approved=db.Column(db.Boolean,default=False)
-    blacklisted=db.Column(db.String(50),nullable=False)
+    blacklisted=db.Column(db.Boolean,nullable=False)
 
     bookings=db.relationship("Booking",backref="user",lazy=True)
-    assigned_treks=db.relationship("Trek",backref="staff",lazy=True,foreign_keys="Treks.assigned_staff_id")
+    assigned_treks=db.relationship("Trek",backref="staff",lazy=True,foreign_keys="Trek.assigned_staff_id")
 
 class Trek(db.Model):
     __tablename__="treks"
@@ -38,4 +38,4 @@ class Booking(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey("users.user_id"),nullable=False)
     trek_id=db.Column(db.Integer,db.ForeignKey("treks.trek_id"),nullable=False)
     booking_date=db.Column(db.Date,default=date.today,nullable=False)
-    status=db.Column(db.String(50),nullable=False)
+    status=db.Column(db.String(50),default="pending",nullable=False)
