@@ -1,19 +1,30 @@
-body{
+.login-page, .register-page{
     margin: 0;
     display: flex;
     min-height: 100vh;
     justify-content: center;
     align-items: center;
-    background-image: url(../images/login-page-mountains.jpg);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: center;
 }
 
-.login-box, .register-page, .first-page{
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.bg-mountains{
+    background-image: url(../images/login-page-mountains.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 90vh;
+}
+
+.login-box, .register-box{
     width: 400px;
     padding: 70px;
-    background: transparent;
+    background: white;
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     text-align: center;
@@ -57,4 +68,30 @@ select{
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.home-btn{
+    border-radius: 2px;
+}
+
+.big-letter{
+    font-size: 80px;
+}
+
+.first{
+    font-size: 30px;
+}
+
+.second{
+    font-size: 40px;
+}
+
+.third{
+    font-size: 50px;
+}
+
+#remember-me{
+    width: auto;
+    padding: 0;
+    margin: 0;
 }

@@ -6,24 +6,26 @@
     <title>Register</title>
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
-<body>
-    <div class="register-page">
+<body class="register-page bg-mountains">
+    <div class="register-box">
         <h1>Register</h1>
-        <input type="text" placeholder="Full Name">
-        <input type="text" placeholder="Email">
-        <input type="text" placeholder="Password">
-        <input type="text" placeholder="Confirm Password">
-        <div>
-            <label>I am</label>
-            <select>
-                <option value="" selected disabled>Select your role</option>
-                <option value="admin">Admin</option>
-                <option value="staff">Trek Staff</option>
-                <option value="trekker">Trekker</option>
-            </select>
-
-        </div>
-        <button type="submit">Register</button>
+        <form method="post" action="/register">
+            <input type="text" placeholder="Full Name" name="name" required>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="text" placeholder="+91XXXXXXXXXX" name="contact" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+            <div>
+                <label>I am</label>
+                <select name="role" required>
+                    <option value="" selected disabled>Select your role</option>
+                    <option value="admin">Admin</option>
+                    <option value="staff">Trek Staff</option>
+                    <option value="trekker">Trekker</option>
+                </select>
+            </div>
+            <button type="submit">Register</button>
+        </form>
         <p>Already have an account? <a href="./login.html">Login here</a></p>
     </div>
 </body>

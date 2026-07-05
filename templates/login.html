@@ -6,17 +6,19 @@
     <title>Login</title>
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="login-page bg-mountains">
     <div class="login-box">
         <h1>Login</h1>
-        <input type="text" placeholder="Email"/>
-        <input type="text" placeholder="Password"/>
-        <div class="login-checkbox">
-            <input type="checkbox" id="remember-me">
-            <label for="remember-me">Remember me</label>
-        </div>
-        <button type="submit">Login</button>
+        <form method="post" action="/login">
+            <input type="text" placeholder="Email" name="email" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <div class="login-checkbox">
+                <input type="checkbox" id="remember-me" name="remember">
+                <label for="remember-me">Remember me</label>
+            </div>
+            <button type="submit">Login</button>
+        </form>
         <p>Don't have an account? <a href="./register.html">Register here</a></p>
     </div>
 </body>
-</html>
+</html> 
