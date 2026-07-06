@@ -12,7 +12,7 @@ class User(db.Model):
     contact=db.Column(db.String(20),nullable=False)
     role=db.Column(db.String(50),nullable=False)
     approved=db.Column(db.Boolean,default=False)
-    blacklisted=db.Column(db.Boolean,nullable=False)
+    blacklisted=db.Column(db.Boolean,nullable=False,default=False)
 
     bookings=db.relationship("Booking",backref="user",lazy=True)
     assigned_treks=db.relationship("Trek",backref="staff",lazy=True,foreign_keys="Trek.assigned_staff_id")
