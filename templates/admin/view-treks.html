@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treks</title>
+</head>
+<body>
+    <h1>All Treks</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Available Slots</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for trek in treks %}
+        <tr>
+            <td>{{trek.name}}</td>
+            <td>{{trek.location}}</td>
+            <td>{{trek.difficulty}}</td>
+            <td>{{trek.duration}}</td>
+            <td>{{trek.available_slots}}</td>
+            <td>{{trek.status}}</td>
+            <td>{{trek.start_date}}</td>
+            <td>{{trek.end_date}}</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

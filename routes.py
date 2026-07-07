@@ -1,4 +1,5 @@
 from app import app
+from datetime import datetime
 from models import db,User,Trek,Booking
 from werkzeug.security import check_password_hash,generate_password_hash
 from flask import render_template, url_for, request, redirect, session
@@ -84,4 +85,48 @@ def register():
 def logout():
     session.clear()
     return redirect(url_for("homepage"))
+
+@app.route("/add-trek",methods=["GET","POST"])
+def addtrek():
+    if request.method=="GET":
+        return render_template("admin/add-trek.html")
+    else:
+        name=request.form.get("name")
+        location=request.form.get("location")
+        difficulty=request.form.get("difficulty")
+        duration=request.form.get("duration")
+        available_slots=request.form.get("available_slots")
+        start_date=request.form.get("start_date")
+        end_date=request.form.get("end_date")
+        
+        start_date=datetime.strptime(start_date,"%Y-%m-%d").date()
+        end_date=datetime.strptime(end_date,"%Y-%m-%d").date()
+        if start_date>end_date:
+            return "Start date cannot be after end date"
+        duration=int(duration)
+        available_slots=int(available_slots)
+        days=(end_date-start_date).days+1
+        if days!=duration:
+            return "Trip duration and date gaps don't match."
+        if available_slots<=0:
+            return "Minimum slots should be 1."
+        trek=Trek(
+            name=name,
+            location=location,
+            difficulty=difficulty,
+            duration=duration,
+            available_slots=available_slots,
+            assigned_staff_id=None,
+            status="upcoming",
+            start_date=start_date,
+            end_date=end_date
+        )        
+        db.session.add(trek)
+        db.session.commit()
+        redirect(url_for("viewtrek"))
+    
+@app.route("/view-treks")
+def viewtrek():
+    treks=Trek.query.all()
+    return render_template("admin/view-trek.html",treks=treks)
 
