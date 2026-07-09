@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treks</title>
+    <title>Assigned Treks</title>
 </head>
 <body>
-    <h1>All Treks</h1>
-    <table style="border: 1px;">
+    <h1>Here are all the treks you were assigned</h1>
+    <table style="border: 1px solid;">
         <tr>
             <th>Name</th>
             <th>Location</th>
             <th>Difficulty</th>
             <th>Duration</th>
             <th>Available Slots</th>
-            <th>Assigned Staff ID</th>
             <th>Status</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Manage Participants</th>
         </tr>
         {% for trek in treks %}
         <tr>
@@ -27,13 +25,11 @@
             <td>{{trek.location}}</td>
             <td>{{trek.difficulty}}</td>
             <td>{{trek.duration}}</td>
-            <td>{{trek.available_slots}}</td>
-            <td>{{trek.assigned_staff_id}}</td>
-            <td>{{trek.status}}</td>
+            <td><a href="/edit-trek-slots/{{trek.trek_id}}">{{trek.available_slots}}</a></td>
+            <td><a href="/edit-trek-status/{{trek.trek_id}}">{{trek.status}}</a></td>
             <td>{{trek.start_date}}</td>
             <td>{{trek.end_date}}</td>
-            <td><a href="/edit-trek/{{trek.trek_id}}">Edit</a></td>
-            <td><a href="/delete-trek/{{trek.trek_id}}">Delete</a></td>
+            <td><a href="/view-participants/{{trek.trek_id}}">View/Manage Participants</a></td>
         </tr>
         {% endfor %}
     </table>

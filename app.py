@@ -73,7 +73,7 @@ def staff():
 
 @app.route("/trekker")
 def trekker():
-    if session.get("role"!="trekker"):
+    if session.get("role")!="trekker":
         return "You are not a trekker"
     return render_template("dashboard/trekker.html")
 
@@ -313,6 +313,14 @@ def searchtrek():
     else:
         trek=Trek.query.filter_by(name=value).all()
     return render_template("search-trek.html",treks=trek)
+
+@app.route("/assigned-treks")
+def assignedtreks():
+    if request.get("role")!="staff":
+        return "You are not a staff member"
+    user_id=session["user_id"]
+    treks=Trek.query.filter_by(assigned_staff_id=user_id).all()
+    return render_template("staff/assigned-treks.html",treks=treks)
 
 if __name__=="__main__":
     app.run(debug=True)
