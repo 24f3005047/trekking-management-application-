@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Staff</title>
+</head>
+<body>
+    <p>Click on approved and blacklisted status to edit.</p>
+    <table style="border: 1;">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Approved</th>
+            <th>Blacklisted</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.contact}}</td>
+            <td>
+                <a href="/approvestatus/{{user.user_id}}">
+                    {% if user.approved %}
+                        Approved
+                    {% else %}
+                        Pending
+                    {% endif %}
+                </a>
+            </td>
+            <td>
+                <a href="/blackliststatus/{{user.user_id}}">
+                    {% if user.blacklisted %}
+                        Blacklisted
+                    {% else %}
+                        Active
+                    {% endif %}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

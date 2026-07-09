@@ -2,10 +2,9 @@ from flask import Flask,render_template,redirect,url_for,request,session
 from models import db,User,Booking,Trek
 from config import Config
 from werkzeug.security import generate_password_hash,check_password_hash
-from datetime import datetime
+from datetime import datetime,date
 
 app=Flask(__name__)
-print("APP ID:", id(app))
 app.config.from_object(Config)
 app.secret_key=Config.SECRET_KEY
 db.init_app(app)
@@ -154,6 +153,127 @@ def viewtrek():
     treks=Trek.query.all()
     return render_template("admin/view-treks.html",treks=treks)
 
-print(app.url_map)
+@app.route("/edit-trek/<int:trek_id>",methods=["GET","POST"])
+def edittrek(trek_id):
+    trek_to_edit=Trek.query.filter_by(trek_id=trek_id).first()
+    if trek_to_edit==None:
+        return "Invalid Trek ID"
+    if request.method=="GET":
+        return render_template("edit-trek.html",trek=trek_to_edit)
+    else:
+        name=request.form.get("name")
+        location=request.form.get("location")
+        difficulty=request.form.get("difficulty")
+        duration=request.form.get("duration")
+        available_slots=request.form.get("available_slots")
+        assigned_staff_id=request.form.get("assigned_staff_id")
+        status=request.form.get("status")
+        start_date=request.form.get("start_date")
+        end_date=request.form.get("end_date")
+
+        start_date=datetime.strptime(start_date,"%Y-%m-%d").date()
+        end_date=datetime.strptime(end_date,"%Y-%m-%d").date()
+        if start_date>end_date:
+            return "Start date cannot be after end date"
+        duration=int(duration)
+        available_slots=int(available_slots)
+        days=(end_date-start_date).days+1
+        if days!=duration:
+            return "Trip duration and date gaps don't match."
+        if available_slots<=0:
+            return "Minimum slots should be 1."
+        trek_to_edit.name=name
+        trek_to_edit.location=location
+        trek_to_edit.difficulty=difficulty
+        trek_to_edit.duration=duration
+        trek_to_edit.available_slots=available_slots
+        if assigned_staff_id=="":
+            trek_to_edit.assigned_staff_id=None
+        else:
+            trek_to_edit.assigned_staff_id=assigned_staff_id
+        trek_to_edit.status=status
+        trek_to_edit.start_date=start_date
+        trek_to_edit.end_date=end_date     
+        db.session.commit()
+        return redirect(url_for("viewtrek"))
+
+@app.route("/delete-trek/<int:trek_id>")
+def deletetrek(trek_id):
+    trek=Trek.query.filter_by(trek_id=trek_id).first()
+    if trek is None:
+        return "Invalid Trek ID"
+    db.session.delete(trek)
+    db.session.commit()
+    return redirect(url_for("viewtrek"))
+
+@app.route("/view-staff")
+def viewstaff():
+    users=User.query.filter_by(role="staff").all()
+    return render_template("admin/view-staff.html",users=users)
+
+@app.route("/view-trekkers")
+def viewtrekkers():
+    trekkers=User.query.filter_by(role="trekker").all()
+    return render_template("admin/view-trekkers.html",users=users)
+
+@app.route("/approvestatus/<int:user_id>")
+def approvestatus(user_id):
+    user=User.query.filter_by(user_id=user_id).first()
+    if user is None:
+        return "Invalid User ID"
+    user.approved=not user.approved
+    db.session.commit()
+    return redirect(request.referrer)
+
+@app.route("/blackliststatus/<int:user_id>")
+def blackliststatus(user_id):
+    user=User.query.filter_by(user_id=user_id).first()
+    if user is None:
+        return "Invalid User ID"
+    user.blacklisted=not user.blacklisted
+    db.session.commit()
+    return redirect(request.referrer)
+
+@app.route("/view-bookings")
+def viewbookings():
+    bookings=Booking.query.all()
+    return render_template("admin/view-bookings.html",bookings=bookings)
+
+@app.route("/available-treks")
+def available_treks():
+    available_treks=Trek.query.filter_by(status="upcoming").all()
+    return render_template("available-treks.html",available_treks=available_treks)
+
+@app.route("/book-trek/<int:trek_id>")
+def booktrek(trek_id):
+    trek=Trek.query.filter_by(trek_id=trek_id).first()
+    if trek is None:
+        return "Invalid Trek ID"
+    user_id=session["user_id"]
+    bookings=Booking.query.filter_by(user_id=user_id).all()
+    for booking in bookings:
+        if booking.trek_id==trek_id:
+            return "You have already booked for this trek."
+    if trek.available_slots>0:
+        book=Booking(
+            user_id=user_id,
+            trek_id=trek_id,
+            booking_date=date.today(),
+            status="Booked"
+            )
+        db.session.add(book)
+        trek.available_slots-=1
+        db.session.commit()
+        return redirect("/booked-treks")
+    else:
+        return "No slots available."
+        
+@app.route("/booked-treks")
+def bookedtreks():
+    user_id=session["user_id"]
+    bookedtreks=Booking.query.filter_by(user_id=user_id).all()
+    return render_template("booked-treks.html",bookedtreks=bookedtreks)
+
+
 if __name__=="__main__":
     app.run(debug=True)

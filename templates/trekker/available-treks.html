@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treks</title>
+    <title>Available Treks</title>
 </head>
 <body>
-    <h1>All Treks</h1>
+    <h1>Available Treks</h1>
     <table style="border: 1;">
         <tr>
             <th>Name</th>
@@ -17,10 +17,9 @@
             <th>Status</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Booking</th>
         </tr>
-        {% for trek in treks %}
+        {% for trek in available-treks %}
         <tr>
             <td>{{trek.name}}</td>
             <td>{{trek.location}}</td>
@@ -30,8 +29,7 @@
             <td>{{trek.status}}</td>
             <td>{{trek.start_date}}</td>
             <td>{{trek.end_date}}</td>
-            <a href="/edit-trek/{{trek.trek_id}}"><td>Edit</td></a>
-            <a href="/delete-trek/{{trek.trek_id}}">Delete</a>
+            <a href="/book-trek/{{trek.trek_id}}"><td>Book</td></a>
         </tr>
         {% endfor %}
     </table>

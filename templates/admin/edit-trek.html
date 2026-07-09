@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Trek</title>
+</head>
+<body>
+    <table style="border: 1;">
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Available Slots</th>
+            <th>Assigned Staff ID</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+        <tr>
+            <td>{{trek.name}}</td>
+            <td>{{trek.location}}</td>
+            <td>{{trek.difficulty}}</td>
+            <td>{{trek.duration}}</td>
+            <td>{{trek.available_slots}}</td>
+            <td>{{trek.assigned_staff_id}}</td>
+            <td>{{trek.status}}</td>
+            <td>{{trek.start_date}}</td>
+            <td>{{trek.end_date}}</td>
+        </tr>
+    </table>
+    <form method="post" action="/edit-trek/{{trek.trek_id}}">
+        <input type="text" placeholder="Trek name" name="name" required>
+        <input type="text" placeholder="Location" name="location" required>
+        <select name="difficulty" required>
+            <option value="" selected disabled>--Select Difficulty--</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+        <input type="text" placeholder="Duration" name="duration" required>
+        <input type="text" placeholder="Available Slots" name="available_slots" required>
+        <input type="text" placeholder="Assigned Staff Id" name="assigned_staff_id" required>
+        <select name="status" required>
+            <option value="" selected disabled>--Select Status--</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+        </select>
+        <input type="date" name="start_date" required>
+        <input type="date" name="end_date" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

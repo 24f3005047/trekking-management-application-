@@ -6,6 +6,20 @@
     <title>Add Treks</title>
 </head>
 <body>
-    <p>This page is for adding treks.</p>
+    <form method="post" action="/add-trek">
+        <input type="text" placeholder="Trek name" name="name" required>
+        <input type="text" placeholder="Location" name="location" required>
+        <select name="difficulty" required>
+            <option value="" selected disabled>--Select Difficulty--</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+        <input type="text" placeholder="Duration" name="duration" required>
+        <input type="text" placeholder="Available Slots" name="available_slots" required>
+        <input type="date" name="start_date">
+        <input type="date" name="end_date">
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booked Treks</title>
+</head>
+<body>
+    <h1>Treks you Booked</h1>
+    <table style="border: 1;">
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Available Slots</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Booking</th>
+        </tr>
+        {% for booking in bookedtreks %}
+        <tr>
+            <td>{{booking.trek.name}}</td>
+            <td>{{booking.trek.location}}</td>
+            <td>{{booking.trek.difficulty}}</td>
+            <td>{{booking.trek.duration}}</td>
+            <td>{{booking.trek.available_slots}}</td>
+            <td>{{booking.trek.status}}</td>
+            <td>{{booking.trek.start_date}}</td>
+            <td>{{booking.trek.end_date}}</td>
+            <td>Booked</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
