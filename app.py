@@ -57,14 +57,24 @@ def login():
            
 @app.route("/admin")
 def admin():
-    return render_template("dashboard/admin.html")
+    if session.get("role")!="admin":
+        return "You are not an Admin"
+    total_trekkers=User.query.filter_by(role="trekker").count()
+    total_staff=User.query.filter_by(role="staff").count()
+    total_treks=Trek.query.count()
+    total_bookings=Booking.query.count()
+    return render_template("dashboard/admin.html",total_trekkers=total_trekkers,total_staff=total_staff,total_treks=total_treks,total_bookings=total_bookings)
 
 @app.route("/staff")
 def staff():
+    if session.get("role")!="staff":
+        return "You are not staff"
     return render_template("dashboard/staff.html")
 
 @app.route("/trekker")
 def trekker():
+    if session.get("role"!="trekker"):
+        return "You are not a trekker"
     return render_template("dashboard/trekker.html")
 
 @app.route("/register",methods=["GET","POST"])
@@ -208,13 +218,13 @@ def deletetrek(trek_id):
 
 @app.route("/view-staff")
 def viewstaff():
-    users=User.query.filter_by(role="staff").all()
-    return render_template("admin/view-staff.html",users=users)
+    staffs=User.query.filter_by(role="staff").all()
+    return render_template("admin/view-users.html",users=staffs)
 
 @app.route("/view-trekkers")
 def viewtrekkers():
     trekkers=User.query.filter_by(role="trekker").all()
-    return render_template("admin/view-trekkers.html",users=users)
+    return render_template("admin/view-users.html",users=trekkers)
 
 @app.route("/approvestatus/<int:user_id>")
 def approvestatus(user_id):
@@ -274,6 +284,35 @@ def bookedtreks():
     bookedtreks=Booking.query.filter_by(user_id=user_id).all()
     return render_template("booked-treks.html",bookedtreks=bookedtreks)
 
+@app.route("/cancel-booking/<int:trek_id>")
+def cancelbooking(trek_id):
+    user_id=session["user_id"]
+    bookings=Booking.query.filter_by(user_id=user_id).all()
+    trek=Trek.query.filter_by(trek_id=trek_id).first()
+    for booking in bookings:
+        if booking.trek_id==trek_id:
+            booking.status="Cancelled"
+            trek.available_slots+=1
+            db.session.commit()
+            return redirect(url_for("bookedtreks"))
+
+@app.route("/search-ppl",methods=["POST"])
+def searchuser():
+    value=request.form.get("value")
+    if value.isdigit():
+        user=User.query.filter_by(user_id=int(value)).all()
+    else:
+        user=User.query.filter_by(name=value).all()
+    return render_template("search-ppl.html",users=user)
+
+@app.route("/search-trek",methods=["POST"])
+def searchtrek():
+    value=request.form.get("value")
+    if value.isdigit():
+        trek=Trek.query.filter_by(trek_id=int(value)).all()
+    else:
+        trek=Trek.query.filter_by(name=value).all()
+    return render_template("search-trek.html",treks=trek)
 
 if __name__=="__main__":
     app.run(debug=True)

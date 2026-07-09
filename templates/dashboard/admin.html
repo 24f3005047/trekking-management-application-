@@ -6,6 +6,43 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
+    <h1>Welcome, Admin</h1>
+    <table style="border: 1px solid;">
+        <tr>
+            <th>Total Treks</th>
+            <th>Total Bookings</th>
+            <th>Total Staff</th>
+            <th>Total Trekkers</th>
+        </tr>
+        <tr>
+            <td>{{total_treks}}</td>
+            <td>{{total_bookings}}</td>
+            <td>{{total_staff}}</td>
+            <td>{{total_trekkers}}</td>
+        </tr>
+    </table>
+    <table class="admin-table" style="border: 1px solid;">
+        <tr>
+            <td><a href="/add-trek"><button>Add Trek</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/view-treks"><button>View All Trek</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/view-staff"><button>View Staff</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/view-trekkers"><button>View Trekkers</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/view-bookings"><button>View Bookings</button></a></td>
+        </tr>
+    </table>
+    <form action="/search-ppl" method="post">
+        <input type="text" name="value" placeholder="Search using person's ID/Name">
+    </form>
+    <form action="/search-trek" method="post">
+        <input type="text" name="value" placeholder="Search using Trek's ID/Name">
+    </form>
 </body>
 </html>

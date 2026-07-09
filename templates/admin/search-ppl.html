@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search People</title>
+</head>
+<body>
+    <h2>Details of User</h2>
+    <table style="border: 1px;">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Role</th>
+            <th>Approved</th>
+            <th>Blacklisted</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.contact}}</td>
+            <td>{{user.role}}</td>
+            <td>
+                {% if user.approved %}
+                     Approved
+                {% else %}
+                    Pending
+                {% endif %}
+            </td>
+            <td>
+                {% if user.blacklisted %}
+                    Blacklisted
+                {% else %}
+                    Active
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

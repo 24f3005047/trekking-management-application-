@@ -18,6 +18,7 @@
             <th>Start Date</th>
             <th>End Date</th>
             <th>Booking</th>
+            <th>Cancel</th>
         </tr>
         {% for booking in bookedtreks %}
         <tr>
@@ -30,6 +31,7 @@
             <td>{{booking.trek.start_date}}</td>
             <td>{{booking.trek.end_date}}</td>
             <td>Booked</td>
+            <a href="/cancel-booking/{{booking.trek_trek_id}}"><td>Cancel</td></a>
         </tr>
         {% endfor %}
     </table>
