@@ -179,7 +179,7 @@ def edittrek(trek_id):
     if trek_to_edit==None:
         return "Invalid Trek ID"
     if request.method=="GET":
-        return render_template("edit-trek.html",trek=trek_to_edit)
+        return render_template("admin/edit-trek.html",trek=trek_to_edit)
     else:
         name=request.form.get("name")
         location=request.form.get("location")
@@ -262,7 +262,7 @@ def viewbookings():
 @app.route("/available-treks")
 def available_treks():
     available_treks=Trek.query.filter_by(status="upcoming").all()
-    return render_template("available-treks.html",available_treks=available_treks)
+    return render_template("trekker/available-treks.html",treks=available_treks)
 
 @app.route("/book-trek/<int:trek_id>")
 def booktrek(trek_id):
@@ -273,39 +273,50 @@ def booktrek(trek_id):
     bookings=Booking.query.filter_by(user_id=user_id).all()
     for booking in bookings:
         if booking.trek_id==trek_id:
-            return "You have already booked for this trek."
-    if trek.available_slots>0:
-        book=Booking(
-            user_id=user_id,
-            trek_id=trek_id,
-            booking_date=date.today(),
-            status="Booked"
-            )
-        db.session.add(book)
-        trek.available_slots-=1
-        db.session.commit()
-        return redirect("/booked-treks")
-    else:
-        return "No slots available."
+            if booking.status=="Booked":
+                return "You have already booked for this trek."
+            else:
+                if trek.available_slots>0:
+                    book=Booking(
+                        user_id=user_id,
+                        trek_id=trek_id,
+                        booking_date=date.today(),
+                        status="Booked"
+                        )
+                    db.session.add(book)
+                else:
+                    return "No slots available."
+    trek.available_slots-=1
+    db.session.commit()
+    return redirect(url_for("bookedtreks"))
         
 @app.route("/booked-treks")
 def bookedtreks():
+    if session.get("role")!="trekker":
+        return "You are not a trekker"
     user_id=session["user_id"]
-    bookedtreks=Booking.query.filter_by(user_id=user_id).all()
-    return render_template("booked-treks.html",bookedtreks=bookedtreks)
+    bookedtreks=Booking.query.filter_by(user_id=user_id,status="Booked").all()
+    all_treks=Trek.query.all()
+    treks=[]
+    for trek in all_treks:
+        for bookedtrek in bookedtreks:
+            if trek.trek_id==bookedtrek.trek_id:
+                treks.append(trek)
+    return render_template("trekker/booked-treks.html",treks=treks)
 
 @app.route("/cancel-booking/<int:trek_id>")
 def cancelbooking(trek_id):
     user_id=session["user_id"]
-    bookings=Booking.query.filter_by(user_id=user_id).all()
+    bookings=Booking.query.filter_by(user_id=user_id,status="Booked").all()
     trek=Trek.query.filter_by(trek_id=trek_id).first()
     for booking in bookings:
         if booking.trek_id==trek_id:
-            booking.status="Cancelled"
+            booking.status="Not booked"
             trek.available_slots+=1
             db.session.commit()
             return redirect(url_for("bookedtreks"))
-
+    return "Booking not found"
+            
 @app.route("/search-ppl",methods=["POST"])
 def searchuser():
     value=request.form.get("value")
@@ -313,7 +324,7 @@ def searchuser():
         user=User.query.filter_by(user_id=int(value)).all()
     else:
         user=User.query.filter_by(name=value).all()
-    return render_template("search-ppl.html",users=user)
+    return render_template("admin/search-ppl.html",users=user)
 
 @app.route("/search-trek",methods=["POST"])
 def searchtrek():
@@ -322,11 +333,11 @@ def searchtrek():
         trek=Trek.query.filter_by(trek_id=int(value)).all()
     else:
         trek=Trek.query.filter_by(name=value).all()
-    return render_template("search-trek.html",treks=trek)
+    return render_template("admin/search-trek.html",treks=trek)
 
 @app.route("/assigned-treks")
 def assignedtreks():
-    if request.get("role")!="staff":
+    if session.get("role")!="staff":
         return "You are not a staff member"
     user_id=session["user_id"]
     treks=Trek.query.filter_by(assigned_staff_id=user_id).all()
@@ -375,8 +386,6 @@ def edittrekstatus(trek_id):
 def updateprofile():
     user_id=session["user_id"]
     user=User.query.filter_by(user_id=user_id).first()
-    if session.get("role")!="staff":
-        return "You are not a staff member"
     if user is None:
         return "Invalid Attempt"
     if request.method=="GET":
@@ -388,7 +397,22 @@ def updateprofile():
     user.email=email
     user.contact=contact
     db.session.commit()
-    return redirect(url_for("staff"))
+    return redirect(url_for(request.referrer))
+
+@app.route("/trek-history")
+def trekhistory():
+    user_id=session["user_id"]
+    if session.get("role")!="trekker":
+        return "You are not a trekker"
+    treks=Booking.query.filter_by(user_id=user_id,status="complete").all()
+    return render_template("trekker/completed-treks.html",treks=treks)
+
+@app.route("/trekker-search-trek-",methods=["POST"])
+def trekkersearchtrek():
+    location=request.form.get("location")
+    difficulty=request.form.get("difficulty")
+    treks=Trek.query.filter_by(location=location,difficulty=difficulty).all()
+    return render_template("search-treks.html",treks=treks)
 
 if __name__=="__main__":
     app.run(debug=True)

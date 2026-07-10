@@ -38,4 +38,4 @@ class Booking(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey("users.user_id"),nullable=False)
     trek_id=db.Column(db.Integer,db.ForeignKey("treks.trek_id"),nullable=False)
     booking_date=db.Column(db.Date,default=date.today,nullable=False)
-    status=db.Column(db.String(50),default="pending",nullable=False)
+    status=db.Column(db.String(50),default="Not booked",nullable=False)

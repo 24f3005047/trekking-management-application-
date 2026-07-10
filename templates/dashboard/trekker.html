@@ -6,6 +6,30 @@
     <title>Trekker Dashboard</title>
 </head>
 <body>
-    <h1>Trekker Dashboard</h1>
+    <h1>Hello, Trekker</h1>
+    <table class="admin-table" style="border: 1px solid;">
+        <tr>
+            <td><a href="/update-profile"><button>Update Profile</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/available-treks"><button>Upcoming Treks</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/booked-treks"><button>Booked Treks</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/trek-history"><button>Completed Treks</button></a></td>
+        </tr>
+    </table>
+    <form action="/trekker-search-trek" method="post">
+        <input type="text" name="location" placeholder="Search using location" required>
+        <select name="difficulty" required>
+            <option value="" selected disabled>--Select Difficulty--</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
