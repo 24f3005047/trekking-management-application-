@@ -6,6 +6,24 @@
     <title>Staff Dashboard</title>
 </head>
 <body>
-    <h1>Staff Dashboard</h1>
+    <h1>Hello, Staff Member</h1>
+    <table style="border: 1px solid;">
+        <tr>
+            <th>Total Treks Assigned</th>
+            <th>Total Trekkers</th>
+        </tr>
+        <tr>
+            <td>{{total_treks}}</td>
+            <td>{{total_trekkers}}</td>
+        </tr>
+    </table>
+    <table class="staff-table" style="border: 1px solid;">
+        <tr>
+            <td><a href="/update-profile"><button>Update Profile</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="/assigned-treks"><button>View All Assigned Treks</button></a></td>
+        </tr>
+    </table>
 </body>
 </html>

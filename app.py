@@ -69,7 +69,17 @@ def admin():
 def staff():
     if session.get("role")!="staff":
         return "You are not staff"
-    return render_template("dashboard/staff.html")
+    user_id=session["user_id"]
+    treks=Trek.query.filter_by(assigned_staff_id=user_id).all()
+    total_treks=len(treks)
+    trekkers=Booking.query.all()
+    participants=[]
+    for trekker in trekkers:
+        for trek in treks:
+            if trekker.trek_id==trek.trek_id:
+                participants.append(trekker)
+    total_trekkers=len(participants)
+    return render_template("dashboard/staff.html",total_treks=total_treks,total_trekkers=total_trekkers)
 
 @app.route("/trekker")
 def trekker():
@@ -321,6 +331,64 @@ def assignedtreks():
     user_id=session["user_id"]
     treks=Trek.query.filter_by(assigned_staff_id=user_id).all()
     return render_template("staff/assigned-treks.html",treks=treks)
+
+@app.route("/view-participants/<int:trek_id>")
+def viewparticipants(trek_id):
+    user_id=session["user_id"]
+    trek=Trek.query.filter_by(assigned_staff_id=user_id,trek_id=trek_id).first()
+    if trek is None:
+        return "Invalid Trek"
+    bookings=Booking.query.filter_by(trek_id=trek.trek_id).all()
+    participants=[]
+    for booking in bookings:
+        user=User.query.filter_by(user_id=booking.user_id).first()
+        participants.append(user)
+    return render_template("staff/participants.html",participants=participants)
+
+@app.route("/edit-trek-slots/<int:trek_id>",methods=["GET","POST"])
+def edittrekslots(trek_id):
+    trek=Trek.query.filter_by(trek_id=trek_id).first()
+    if trek is None:
+        return "Invalid Trek"
+    if request.method=="GET":
+        return render_template("staff/edit-trek-slots.html",trek_id=trek_id)
+    else:
+        slots=request.form.get("slots")
+        trek.available_slots=int(slots)
+        db.session.commit()
+        return redirect(url_for("/assignedtreks"))
+
+@app.route("/edit-trek-status/<int:trek_id>",methods=["GET","POST"])
+def edittrekstatus(trek_id):
+    trek=Trek.query.filter_by(trek_id=trek_id).first()
+    if trek is None:
+        return "Invalid Trek"
+    if request.method=="GET":
+        return render_template("staff/edit-trek-status.html",trek_id=trek_id)
+    else:
+        status=request.form.get("status")
+        trek.status=status
+        db.session.commit()
+        return redirect(url_for("/assignedtreks"))
+    
+@app.route("/update-profile",methods=["GET","POST"])
+def updateprofile():
+    user_id=session["user_id"]
+    user=User.query.filter_by(user_id=user_id).first()
+    if session.get("role")!="staff":
+        return "You are not a staff member"
+    if user is None:
+        return "Invalid Attempt"
+    if request.method=="GET":
+        return render_template("staff/update-profile.html")
+    name=request.form.get("name")
+    email=request.form.get("email")
+    contact=request.form.get("contact")
+    user.name=name
+    user.email=email
+    user.contact=contact
+    db.session.commit()
+    return redirect(url_for("staff"))
 
 if __name__=="__main__":
     app.run(debug=True)
