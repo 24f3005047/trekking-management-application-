@@ -27,6 +27,10 @@ with app.app_context():
     else:
         print("Admin already exists")
 
+@app.route("/del-bbokings")
+def delbookings():
+    Booking.query.delete()
+
 @app.route("/")
 def homepage():
     return render_template("home-page.html")
@@ -284,9 +288,9 @@ def booktrek(trek_id):
                         status="Booked"
                         )
                     db.session.add(book)
+                    trek.available_slots-=1
                 else:
                     return "No slots available."
-    trek.available_slots-=1
     db.session.commit()
     return redirect(url_for("bookedtreks"))
         
@@ -404,7 +408,12 @@ def trekhistory():
     user_id=session["user_id"]
     if session.get("role")!="trekker":
         return "You are not a trekker"
-    treks=Booking.query.filter_by(user_id=user_id,status="complete").all()
+    today_date=date.today()
+    today = date.today()
+    completed_bookings=db.session.query(Booking).join(Trek).filter(Booking.status!="Cancelled",Trek.end_date<today).all()
+    for booking in completed_bookings:
+        booking.status = "Completed"
+    db.session.commit()
     return render_template("trekker/completed-treks.html",treks=treks)
 
 @app.route("/trekker-search-trek-",methods=["POST"])
