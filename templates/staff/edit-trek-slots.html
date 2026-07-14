@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Available Slots</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-mountains">
+<body class="bg-mountains p-4">
     <h1>Edit Available Slots of the Trek you selected</h1>
-    <form action="/edit-trek-slots/{{trek_id}}" method="post">
-        <input type="text" placeholder="Changed Slots" name="slots" required>
+    <form action="/edit-trek-slots/{{trek_id}}" class="form" method="post">
+        <input type="text" class="form-control" placeholder="Changed Slots" name="slots" required>
     </form>
 </body>
 </html>

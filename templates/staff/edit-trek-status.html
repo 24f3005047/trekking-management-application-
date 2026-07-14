@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Trek Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-mountains">
+<body class="bg-mountains p-4">
     <h1>Edit Status of the Trek you selected</h1>
-    <form action="/edit-trek-status/{{trek_id}}" method="post">
-        <select name="status" required>
+    <form action="/edit-trek-status/{{trek_id}}" method="post" class="form">
+        <select name="status" class="form-select" required>
             <option value="" selected disabled>--Select Status--</option>
-            <option value="complete">Complete</option>
+            <option value="complete">Completed</option>
             <option value="cancelled">Cancelled</option>
             <option value="upcoming">Upcoming</option>
         </select>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </body>
 </html>

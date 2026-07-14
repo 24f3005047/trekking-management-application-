@@ -4,21 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
 <body class="login-page bg-mountains">
     <div class="login-box">
         <h1>Login</h1>
-        <form method="post" action="/login">
-            <input type="text" placeholder="Email" name="email" required>
-            <input type="password" placeholder="Password" name="password" required>
-            <div class="login-checkbox">
-                <input type="checkbox" id="remember-me" name="remember">
-                <label for="remember-me">Remember me</label>
-            </div>
-            <button type="submit">Login</button>
+        <form method="post" action="/login" class="form">
+            <input type="text" class="form-control" placeholder="Email" name="email" required>
+            <input type="password" class="form-control" placeholder="Password" name="password" required>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        <p>Don't have an account? <a href="/register">Register here</a></p>
+        <p>Don't have an account? <a href="/register">Register</a></p>
     </div>
 </body>
 </html> 

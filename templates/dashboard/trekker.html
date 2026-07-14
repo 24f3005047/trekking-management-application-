@@ -4,34 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trekker Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-mountains">
-    <h1>Hello, Trekker</h1>
-    <table class="admin-table" style="border: 1px solid;">
+<body class="bg-mountains p-4">
+    <h1 class="mb-4">Hello, Trekker</h1>
+    <table class="table table-striped table-hover table-bordered">
         <tr>
-            <td><a href="/update-profile"><button>Update Profile</button></a></td>
+            <td><a href="/update-profile"><button class="btn btn-primary">Update Profile</button></a></td>
         </tr>
         <tr>
-            <td><a href="/available-treks"><button>Upcoming Treks</button></a></td>
+            <td><a href="/available-treks"><button class="btn btn-primary">Upcoming Treks</button></a></td>
         </tr>
         <tr>
-            <td><a href="/booked-treks"><button>Booked Treks</button></a></td>
+            <td><a href="/booked-treks"><button class="btn btn-primary">Booked Treks</button></a></td>
         </tr>
         <tr>
-            <td><a href="/trek-history"><button>Completed Treks</button></a></td>
+            <td><a href="/trek-history"><button class="btn btn-primary">Completed Treks</button></a></td>
         </tr>
     </table>
-    <form action="/trekker-search-trek" method="post">
-        <input type="text" name="location" placeholder="Search using location" required>
-        <select name="difficulty" required>
+    <form action="/trekker-search-trek" method="post" class="mb-3">
+        <input type="text" name="location" class="form-control mb-2" placeholder="Search using location" required>
+        <select name="difficulty" class="form-select mb-2" required>
             <option value="" selected disabled>--Select Difficulty--</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
         </select>
-        <button type="submit">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
-    <a href="/logout"><button>Logout</button></a>
+    <a href="/logout"><button class="btn btn-primary">Logout</button></a>
 </body>
 </html>

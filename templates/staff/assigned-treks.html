@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assigned Treks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-mountains">
+<body class="bg-mountains p-4">
     <h1>Here are all the treks you were assigned</h1>
-    <h3>Click on the slots to edit.</h3>
-    <h3>Click on the status to edit.</h3>
-    <h3>Click on the participants to view/edit.</h3>
-    <table style="border: 1px solid;">
+    <h4>Click on the slots,status,participants to view/edit.</h4>
+    <table class="table table-bordered table-striped">
         <tr>
+            <th>Trek ID</th>
             <th>Name</th>
             <th>Location</th>
             <th>Difficulty</th>
@@ -25,6 +25,7 @@
         </tr>
         {% for trek in treks %}
         <tr>
+            <td>{{trek.trek_id}}</td>
             <td>{{trek.name}}</td>
             <td>{{trek.location}}</td>
             <td>{{trek.difficulty}}</td>

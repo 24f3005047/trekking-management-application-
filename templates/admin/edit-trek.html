@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Trek</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-mountains">
-    <table style="border: 1px solid;">
+<body class="bg-mountains p-4">
+    <table class="table table-bordered table-striped">
         <tr>
+            <th>Trek ID</th>
             <th>Name</th>
             <th>Location</th>
             <th>Difficulty</th>
@@ -20,6 +22,7 @@
             <th>End Date</th>
         </tr>
         <tr>
+            <td>{{trek.trek_id}}</td>
             <td>{{trek.name}}</td>
             <td>{{trek.location}}</td>
             <td>{{trek.difficulty}}</td>
@@ -31,27 +34,27 @@
             <td>{{trek.end_date}}</td>
         </tr>
     </table>
-    <form method="post" action="/edit-trek/{{trek.trek_id}}">
-        <input type="text" placeholder="Trek name" name="name" required>
-        <input type="text" placeholder="Location" name="location" required>
-        <select name="difficulty" required>
+    <form method="post" action="/edit-trek/{{trek.trek_id}}" class="form">
+        <input type="text" class="form-control" placeholder="Trek name" name="name" required>
+        <input type="text" class="form-control" placeholder="Location" name="location" required>
+        <select name="difficulty" class="form-select" required>
             <option value="" selected disabled>--Select Difficulty--</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
         </select>
-        <input type="text" placeholder="Duration" name="duration" required>
-        <input type="text" placeholder="Available Slots" name="available_slots" required>
-        <input type="text" placeholder="Assigned Staff Id" name="assigned_staff_id" required>
-        <select name="status" required>
+        <input type="text" class="form-control" placeholder="Duration" name="duration" required>
+        <input type="text" class="form-control" placeholder="Available Slots" name="available_slots" required>
+        <input type="text" class="form-control" placeholder="Assigned Staff Id" name="assigned_staff_id" required>
+        <select name="status" class="form-select" required>
             <option value="" selected disabled>--Select Status--</option>
             <option value="upcoming">Upcoming</option>
             <option value="completed">Completed</option>
             <option value="cancelled">Cancelled</option>
         </select>
-        <input type="date" name="start_date" required>
-        <input type="date" name="end_date" required>
-        <button type="submit">Submit</button>
+        <input type="date" class="form-control" name="start_date" required>
+        <input type="date" class="form-control" name="end_date" required>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </body>
 </html>
