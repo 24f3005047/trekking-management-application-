@@ -196,6 +196,13 @@ Trekkers can view the available(upcoming) treks, and book the treks from the upc
 
 ---
 
+# Image used in the project
+
+I took this background image of mountains from a website name unsplash and the user and the image link are given below I give the credit for the image to him.
+[text](https://unsplash.com/photos/snowy-mountain-g30P1zcOzXo?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink)
+
+---
+
 # 👩‍💻 Developed By
 
 **Om Shiv Verma**
