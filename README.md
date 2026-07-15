@@ -1,10 +1,9 @@
 # Trekking Management System 
 This is a web application developed my me; 24f350047 Om Shiv Verma for my MAD-1 Project for keeping and maintaning the trekking, booking, staff and trekkers record in one place to access it smartly and easily as much as possible and look professional.
 
-# Project Overview
 ## 📋 Project Overview
 
-The Trekking Management System is designed for adventure organizations that conduct multiple trekking events throughout the year. Managing participants, trek leaders, schedules, and bookings manually can become difficult as the number of treks increases.
+The Trekking Management System is designed for adventure organizations and trekking communities that conduct multiple trekking events throughout the year. Managing participants, trek leaders, schedules, and bookings manually can become difficult as the number of treks increases. So
 
 This application provides separate dashboards for **Admin**, **Staff**, and **Trekkers**, allowing each user to access only the features relevant to their role. The system also helps prevent duplicate bookings, manages available slots, tracks trek history, and keeps all trek-related information organized in one place.
 
@@ -15,14 +14,15 @@ This application provides separate dashboards for **Admin**, **Staff**, and **Tr
 ## 👨‍💼 Admin
 
 - Login using predefined admin account
-- Add new trekking events
-- Edit trek information
+- Add new treks
+- Edit trek information; name,location,duration,slots,dates,staff it is assigned to etc
 - Delete existing treks
-- View all available treks
+- View all treks
 - View all registered staff members
 - View all registered trekkers
-- Approve or reject staff registrations
-- Blacklist or unblacklist staff members
+- Approve staff memeber's account to let them login
+- Change approval status of a trekker to pending to stop them from logging in
+- Switch a staff member's or trekker's blacklisted status between active and blacklisted
 - Search users by ID or name
 - Search treks by ID or name
 - View all trek bookings
@@ -44,7 +44,7 @@ This application provides separate dashboards for **Admin**, **Staff**, and **Tr
 - Register and login
 - View upcoming treks
 - Search treks by location and difficulty
-- Book trekking events
+- Book treks
 - Cancel booked treks
 - View booked treks
 - View completed trek history
@@ -53,33 +53,36 @@ This application provides separate dashboards for **Admin**, **Staff**, and **Tr
 
 # 🧱 Tech Stack
 
-| Layer | Technology |
-|--------|------------|
-| Backend | Flask (Python) |
-| Frontend | HTML5, CSS3 |
-| Database | SQLite3 |
-| ORM | SQLAlchemy |
-| Template Engine | Jinja2 |
-| Authentication | Flask Session |
-| Version Control | Git & GitHub |
+| Layer           | Technology     |
+|-----------------|----------------|
+| Backend         | Flask (Python) |
+| Frontend        | HTML5, CSS3    |
+| Database        | SQLite3        |
+| ORM             | SQLAlchemy     |
+| Template Engine | Jinja2         |
+| Authentication  | Flask Session  |
+| Version Control | Git & GitHub   |
 
 ---
 
 # 📂 Project Structure
 
 ```text
-TREKKING-MANAGEMENT-SYSTEM/
+TREKKING-MANAGEMENT-APP/
 │
 ├── app.py                     # Main Flask application
 ├── models.py                  # Database models
 ├── config.py                  # Application configuration
 │
-├── trekking_management.db     # SQLite database
-│
 ├── static/
-│   ├── style.css
+│   ├── css/
+|   |   |
+|   |   └──style.css
+|   |   
 │   └── images/
-│
+|       |
+│       └── images/
+|
 ├── templates/
 │   │
 │   ├── home-page.html
@@ -114,6 +117,7 @@ TREKKING-MANAGEMENT-SYSTEM/
 │       └── trekker.html
 │
 ├── README.md
+├── report.pdf
 └── requirements.txt
 ```
 
@@ -123,11 +127,16 @@ TREKKING-MANAGEMENT-SYSTEM/
 
 ### User
 
-Stores information about every registered user.
+Stores all information about every registered user- Admin,Staff,Trekker
 
-- Admin
-- Trek Staff
-- Trekker
+- User ID
+- Name
+- Email
+- Password
+- Contact
+- Role
+- Approved
+- Blacklisted
 
 ---
 
@@ -135,15 +144,16 @@ Stores information about every registered user.
 
 Stores all trekking event details.
 
+- Trek ID
 - Trek Name
 - Location
 - Difficulty
 - Duration
 - Available Slots
-- Assigned Staff
+- Assigned Staff ID
+- Trek Status
 - Start Date
 - End Date
-- Trek Status
 
 ---
 
@@ -151,8 +161,9 @@ Stores all trekking event details.
 
 Maintains records of trek bookings.
 
-- Trekker
-- Trek
+- Boking ID
+- Trekker Id
+- Trek ID
 - Booking Date
 - Booking Status
 
@@ -162,79 +173,24 @@ Maintains records of trek bookings.
 
 ### Admin
 
-Responsible for managing the complete trekking system including treks, users, staff approvals, bookings, and trek assignments.
+The admin can add treks, edit treks, view staff members, view trekkers, mark staff and trekkers as blacklisted and approved, search for staff and trekkers using their user_id or name, search for treks using trek_id or its name and also view the bookings done by the trekkers.
 
 ### Staff
 
-Responsible for handling assigned treks, monitoring participants, updating trek progress, and managing trek availability.
+Staff members can view treks that are assigned to them, edit trek slots and status of the assigned treks, view the participants that have booked for the trek he/she has been assigned to, staff member can also update his profile- name, contact, email.
 
 ### Trekker
 
-Can browse available treks, search based on preferences, book or cancel treks, and maintain personal trek history.
+Trekkers can view the available(upcoming) treks, and book the treks from the upcoming treks by clicking on the book button, view the treks for which they have done the booking, view the treks that they have completed until present date, they can also see the treks according to the difficulty and location of the treks.
 
 ---
 
-# ▶️ Running the Project
+# 📌 Future Improvements we can make
 
-### Clone the repository
-
-```bash
-git clone https://github.com/your-username/trekking-management-system.git
-```
-
-### Move into the project directory
-
-```bash
-cd trekking-management-system
-```
-
-### Create a virtual environment
-
-```bash
-python -m venv venv
-```
-
-### Activate the environment
-
-Windows
-
-```bash
-venv\Scripts\activate
-```
-
-Mac/Linux
-
-```bash
-source venv/bin/activate
-```
-
-### Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Run the application
-
-```bash
-python app.py
-```
-
-The application will be available at
-
-```
-http://127.0.0.1:5000/
-```
-
----
-
-# 📌 Future Improvements
-
-- Medical certificate upload for trekkers
+- Medical certificate upload for trekkers for better trek recommendations
 - Email notifications for booking confirmation
-- Payment gateway integration
-- Trek image gallery
-- GPS-based trek tracking
+- Payment gateway integration for booking amount which will be minimal
+- Trek image gallery, for better booking 
 - Weather updates for trekking locations
 - Admin analytics dashboard
 
@@ -244,6 +200,4 @@ http://127.0.0.1:5000/
 
 **Om Shiv Verma**
 
-Bachelor of Technology (Computer Science)
-
-Academic Project – Trekking Management System using Flask & SQLite
+Academic Project – Trekking Management System using HTML,CSS,Bootstrap,Flask & SQLAlchemy
